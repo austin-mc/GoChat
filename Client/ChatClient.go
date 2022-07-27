@@ -68,15 +68,6 @@ type Room struct {
 func main() {
 	activeRooms = make([]Room, 0)
 	printMenu()
-<<<<<<< HEAD
-=======
-	// Empty struct to hold the rooms the user is active in
-	//activeRooms := make([]Room, 0)
-	// Map that holds key/value pairs for roomNames as the key and the epoch time of the last update as the value
-	username = "Ryan"
-	activeRooms := make(map[string]int64)
-	//var userIn string
->>>>>>> e9970270333a7657fee969a80f47ce43f305e662
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Println("Welcome to the golang chat app!")
 	fmt.Print("Please enter desired username: ")
