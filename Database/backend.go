@@ -387,10 +387,15 @@ func joinRoomHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !roomExists(room) {
+		if err := createRoom(room); err != nil {
+			http.Error(w, fmt.Sprintf("Error creating room with name \"%s\"", room), http.StatusBadRequest)
+		}
+	}
 	roomID, err := getRoomID(room)
 	if err != nil {
 		// Trying to join a room that doesn't exist, return an http error
-		http.Error(w, fmt.Sprintf("Error joining room with name \"%s\": A room with this name does not exist", room), http.StatusBadRequest)
+		http.Error(w, fmt.Sprintf("Error joining room with name \"%s\"", room), http.StatusBadRequest)
 		return
 	}
 

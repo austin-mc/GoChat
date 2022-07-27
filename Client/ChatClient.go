@@ -188,7 +188,6 @@ func postMessage(room string, message string) {
 
 // Sends an HTTP POST request for the user to join a room
 func joinRoom(roomName string) {
-	fmt.Println("HERE")
 	postURL := url + "/chat/room/join"
 	client := http.Client{}
 	req, err := http.NewRequest("POST", postURL, nil)
