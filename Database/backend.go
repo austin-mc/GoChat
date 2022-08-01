@@ -44,7 +44,7 @@ type Response struct {
 // Global DB variable
 var db *sql.DB
 
-//All websocket connections and their userID's
+// All websocket connections and their userID's
 var wsconns map[int]*websocket.Conn
 
 // map[roomID]userName

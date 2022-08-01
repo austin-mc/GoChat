@@ -67,9 +67,10 @@ type Room struct {
 
 func main() {
 	activeRooms = make([]Room, 0)
-	printMenu()
 	scanner := bufio.NewScanner(os.Stdin)
+
 	fmt.Println("Welcome to the golang chat app!")
+	printMenu()
 	fmt.Print("Please enter desired username: ")
 	scanner.Scan()
 	if err := scanner.Err(); err != nil {
@@ -91,7 +92,7 @@ func main() {
 	}
 
 	defer conn.Close()
-	go recieveHandler(conn)
+	go recieveHandler()
 
 	scanner.Scan()
 
@@ -113,7 +114,7 @@ func main() {
 		case "help":
 			printMenu()
 		case "quit":
-			os.Exit(0)
+			quit()
 		case "msg":
 			lastActiveRoom = msg
 		case "status":
@@ -127,15 +128,25 @@ func main() {
 	}
 }
 
-func recieveHandler(conn *websocket.Conn) {
+// Leaves all active rooms before quitting
+func quit() {
+	for _, v := range activeRooms {
+		leaveRoom(v.roomName)
+	}
+	os.Exit(0)
+}
+
+// Handles incomoing messages over the websocket connection
+func recieveHandler() {
 	defer close(done)
 	var msg Message
 	var err error
 	for {
-		err = conn.ReadJSON(&msg)
+		err = wsconn.ReadJSON(&msg)
 		if err != nil {
 			log.Println("Error reading json: ", err)
 		}
+		// Print the message to the user's console
 		fmt.Printf("[%s] %s (%s): %s\n", *msg.RoomName, *msg.Sender, time.Now().Format(time.RFC822), *msg.MessageText)
 	}
 }
