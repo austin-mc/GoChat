@@ -1,5 +1,5 @@
 # GoChat
-Simple Go Chat App using a SQLite Database, HTML REST API, and Websockets
+Simple Go Chat App using a SQLite Database, HTTP REST API, and Websockets
 
 ### Background
 
